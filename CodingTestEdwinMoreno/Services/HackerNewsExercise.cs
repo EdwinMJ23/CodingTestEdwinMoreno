@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
 
+
 namespace CodingTestEdwinMoreno.Services
 {
     public class HackerNewsExercise : IHackerNewsExercise
@@ -9,7 +10,7 @@ namespace CodingTestEdwinMoreno.Services
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IMemoryCache _cache;
         private const string BestStoriesUrl = "https://hacker-news.firebaseio.com/v0/beststories.json";
-        private const string StoryUrl = "https://hacker-news.firebaseio.com/v0/item/21233041.json ";
+        private const string StoryUrl = "https://hacker-news.firebaseio.com/v0/item/21233041.json";
 
         public HackerNewsExercise(IHttpClientFactory httpClientFactory, IMemoryCache cache)
         {
@@ -42,7 +43,7 @@ namespace CodingTestEdwinMoreno.Services
             {
                 var response = await httpClient.GetStringAsync(BestStoriesUrl);
                 storyIds = JsonSerializer.Deserialize<List<int>>(response);
-                _cache.Set("BestStoryIds", storyIds, TimeSpan.FromMinutes(10));
+                _cache.Set("BestStoryIds", storyIds, TimeSpan.FromMinutes(8));
             }
             return storyIds;
         }
@@ -56,7 +57,7 @@ namespace CodingTestEdwinMoreno.Services
             return new Story
             {
                 Title = storyData.GetProperty("title").GetString(),
-                Uri = storyData.GetProperty("url").GetString(),
+                Url = storyData.GetProperty("url").GetString(),
                 PostedBy = storyData.GetProperty("by").GetString(),
                 Time = DateTimeOffset.FromUnixTimeSeconds(storyData.GetProperty("time").GetInt64()).UtcDateTime,
                 Score = storyData.GetProperty("score").GetInt32(),

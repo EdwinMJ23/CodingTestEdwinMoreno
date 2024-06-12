@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodingTestEdwinMoreno.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class StoriesController : ControllerBase
     {
         private readonly IHackerNewsExercise _hackerNewsExercise;
@@ -15,7 +15,7 @@ namespace CodingTestEdwinMoreno.Controllers
             _hackerNewsExercise = hackerNewsExercise;
         }
         [HttpGet]
-        public async Task<IActionResult> GetBestStories([FromQuery] int count = 8)
+        public async Task<IActionResult> GetBestStories([FromQuery] int count = 10)
         {
             var stories = await _hackerNewsExercise.GetBestStoriesAsync(count);
             return Ok(stories);
